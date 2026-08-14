@@ -17,10 +17,18 @@
 - 未经要求不要创建分支、提交或推送代码。
 - 修改后执行与改动范围匹配的验证。
 
+## Python
+
+- 以下规则仅适用于 Python 代码。
+- `INFO` 级别日志内容以英文为主，避免不必要的特殊字符。
+- 代码注释以英文为主，避免不必要的特殊字符。
+- 应用运行信息使用标准 `logging`，不使用 `print` 代替日志。
+- CLI 的预期标准输出、数据管道输出和测试捕获输出可以使用 `print`。
+- 配置日志处理器，确保日志信息在当前执行环境的控制台中可见。
+
 ## Yuanchuan Projects
 
-The following rules apply only when the workspace is under
-`/Users/bianjq/yuanchuan/`.
+The following rules apply only when the workspace is under `/Users/bianjq/yuanchuan/`.
 
 - 按照项目现有 DDD 分层架构开发。
 - 不分析 `backup/` 目录下的文件。
@@ -38,7 +46,7 @@ The following rules apply only when the workspace is under
 - SQL 文件命名使用 `<table-name>_<YYYYMMDD>.sql`。
 - 实施方案文件放到当前工作区的 `guide/plan/`。
 - 查询或验证真实数据时必须使用全局 `db-tools` Skill。
-
+- Java 代码中 log.info 中的信息以英文为主
 ## Yuanchuan Project Lookup
 The following instructions apply only when the current workspace is under `/Users/bianjq/yuanchuan/`.
 ```text
@@ -64,6 +72,7 @@ ProjectHome=/Users/bianjq/yuanchuan
 18. ${ProjectHome}/search → com.yuanchuan.search.*
 19. ${ProjectHome}/task → com.yuanchuan.task.*
 20. ${ProjectHome}/user → com.yuanchuan.user.*
+```
 
 ## Database Environments
 

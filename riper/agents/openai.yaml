@@ -1,0 +1,6 @@
+interface:
+  display_name: "RIPER5 Software Workflow"
+  short_description: "Run complex engineering tasks through the RIPER workflow"
+  default_prompt: "Use $riper to handle this task through the RIPER workflow."
+policy:
+  allow_implicit_invocation: true
