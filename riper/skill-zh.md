@@ -86,9 +86,14 @@ ENTER INNOVATE MODE
 ENTER PLAN MODE
 ENTER EXECUTE MODE
 ENTER REVIEW MODE
+ENTER AUTO MODE
 ```
 
-在 Codex 中，阶段是检查点而不是无条件的权限门槛。用户明确要求实现时，可以按研究、构思、规划、执行、审查顺序连续推进；用户只要求分析、规划或审查时，在对应阶段结束。需要用户选择或确认的重大取舍必须停下来询问。
+只有收到明确的 `ENTER ... MODE` 信号才能切换阶段。没有信号时停留在当前阶段；用户要求实现不会自动进入 Execute。
+
+`ENTER AUTO MODE` 允许按成功标准自动推进 RIPER 阶段。Auto Mode 仍然不代表用户授权修改代码、创建分支、提交或推送。
+
+阶段切换和副作用授权是两件事。进入 Execute 仍需用户对修改行为有明确授权；进入 Review 也不会自动暂存或提交代码。
 
 ## 五、沟通和代码规范
 

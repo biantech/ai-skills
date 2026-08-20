@@ -40,7 +40,7 @@ The following rules apply only when the workspace is under `/Users/bianjq/yuanch
 - List、Set、Map 判空优先使用
   `org.apache.commons.collections4.CollectionUtils`。
 - 修改数据库字段时同步检查 PO、DTO、Mapper、XML、Repository 和相关测试。
-- 新增数据库字段或表时，在模块 `guide/` 或 `sql/` 目录增加 SQL 文件。
+- 新增数据库字段或表时，在模块 `guide/`  目录增加 SQL 文件。
 - 新建表的主键使用 `int` 数据类型，不添加 `created_at`、`created_by` 字段。
 - MyBatis-Plus 以 XML Mapper 为主要实现方式，尽量少用 Lambda 表达式。
 - SQL 文件命名使用 `<table-name>_<YYYYMMDD>.sql`。
