@@ -1,0 +1,6 @@
+interface:
+  display_name: "Azure App Insights via 237"
+  short_description: "Read-only KQL logs through Azure CLI on 237"
+  default_prompt: "Use $azure-appinsights-query to run a bounded, read-only KQL query through the authenticated Azure CLI on host 237."
+policy:
+  allow_implicit_invocation: true

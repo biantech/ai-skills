@@ -3,7 +3,7 @@ name: riper
 description: "Apply the RIPER five-phase workflow to complex engineering tasks that need disciplined research, option analysis, planning, implementation, and review. Use only when the user explicitly invokes $riper or asks for a RIPER or RIPER-5 workflow. Do not trigger for ordinary coding tasks."
 ---
 
-# RIPER5 Software Workflow
+# RIPER Software Workflow
 
 Use five visible phases to keep complex engineering work grounded in evidence and aligned with the user's request.
 
@@ -15,7 +15,6 @@ For a Chinese reference summary of the original Augment guidelines, see [skill-z
 $riper 帮我分析并实现这个需求：...
 $riper 只分析这个问题，不修改代码：...
 $riper 审查当前改动并按严重程度报告问题。
-ENTER AUTO MODE
 ```
 
 ## Core Rules
@@ -39,6 +38,7 @@ Only explicit signals can change the current phase:
 - `ENTER PLAN MODE`
 - `ENTER EXECUTE MODE`
 - `ENTER REVIEW MODE`
+- `ENTER AUTO MODE`
 
 Use `ENTER AUTO MODE` to allow automatic transitions through the RIPER phases. In Auto Mode:
 

@@ -1,0 +1,40 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude / AI工具产生的工作目录
+.claude/
+.windsurf/
+.cursor/
+
+# 临时文件
+*.tmp
+*.bak
+*.log
+
+# Node（如果后续加脚本）
+node_modules/
+dist/
+build/
+
+# Python（如果后续加脚本）
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 个人隐私（防止误上传）
+*-私人.md
+*-private.md
+*.draft.md
+
+# 原始教案语料（版权保留，不上传）
+markdowns/

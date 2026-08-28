@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Layered report diagram template</title>
+  <desc>Three stacked sections showing an input flow, processing directions, and business outputs.</desc>
+  <defs>
+    <marker id="arrow-slate" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrow-pink" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#db2777"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <style>
+      .font { font-family: Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif; }
+      .title { font-size: 36px; font-weight: 760; fill: #0f172a; }
+      .subtitle { font-size: 18px; font-weight: 400; fill: #475569; }
+      .section-title { font-size: 21px; font-weight: 720; }
+      .card-title { font-size: 16px; font-weight: 720; }
+      .card-text { font-size: 13px; font-weight: 400; fill: #475569; }
+    </style>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#ffffff"/>
+
+  <text x="80" y="68" class="font title">Diagram Title</text>
+  <text x="82" y="104" class="font subtitle">Short subtitle describing the business or technical context</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="145" width="1780" height="170" rx="18" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2"/>
+    <text x="98" y="182" class="font section-title" fill="#334155">Section One</text>
+
+    <rect x="120" y="210" width="360" height="70" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4"/>
+    <text x="300" y="238" class="font card-title" fill="#0f172a" text-anchor="middle">Card Title</text>
+    <text x="300" y="262" class="font card-text" text-anchor="middle">One concise supporting line</text>
+
+    <rect x="600" y="210" width="360" height="70" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4"/>
+    <text x="780" y="238" class="font card-title" fill="#0f172a" text-anchor="middle">Card Title</text>
+    <text x="780" y="262" class="font card-text" text-anchor="middle">One concise supporting line</text>
+
+    <rect x="1080" y="210" width="360" height="70" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4"/>
+    <text x="1260" y="238" class="font card-title" fill="#0f172a" text-anchor="middle">Card Title</text>
+    <text x="1260" y="262" class="font card-text" text-anchor="middle">One concise supporting line</text>
+  </g>
+
+  <path d="M480 245 L600 245" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-slate)"/>
+  <path d="M960 245 L1080 245" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-slate)"/>
+  <path d="M960 315 L960 355" fill="none" stroke="#2563eb" stroke-width="2.2" marker-end="url(#arrow-blue)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="355" width="1780" height="390" rx="18" fill="#fffaf5" stroke="#fed7aa" stroke-width="1.2"/>
+    <text x="98" y="392" class="font section-title" fill="#9a3412">Section Two</text>
+
+    <rect x="120" y="435" width="360" height="110" rx="12" fill="#ffffff" stroke="#f97316" stroke-width="1.5"/>
+    <text x="150" y="468" class="font card-title" fill="#9a3412">1. Direction</text>
+    <text x="150" y="500" class="font card-text">
+      <tspan x="150" dy="0">Short explanation line one</tspan>
+      <tspan x="150" dy="24">Short explanation line two</tspan>
+    </text>
+
+    <rect x="560" y="435" width="360" height="110" rx="12" fill="#ffffff" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="590" y="468" class="font card-title" fill="#166534">2. Direction</text>
+    <text x="590" y="500" class="font card-text">
+      <tspan x="590" dy="0">Short explanation line one</tspan>
+      <tspan x="590" dy="24">Short explanation line two</tspan>
+    </text>
+
+    <rect x="1000" y="435" width="360" height="110" rx="12" fill="#ffffff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="1030" y="468" class="font card-title" fill="#1d4ed8">3. Direction</text>
+    <text x="1030" y="500" class="font card-text">
+      <tspan x="1030" dy="0">Short explanation line one</tspan>
+      <tspan x="1030" dy="24">Short explanation line two</tspan>
+    </text>
+
+    <rect x="1440" y="435" width="360" height="110" rx="12" fill="#ffffff" stroke="#db2777" stroke-width="1.5"/>
+    <text x="1470" y="468" class="font card-title" fill="#9d174d">4. Direction</text>
+    <text x="1470" y="500" class="font card-text">
+      <tspan x="1470" dy="0">Short explanation line one</tspan>
+      <tspan x="1470" dy="24">Short explanation line two</tspan>
+    </text>
+
+    <rect x="255" y="620" width="1410" height="80" rx="14" fill="#ffffff" stroke="#fdba74" stroke-width="1.4"/>
+    <text x="960" y="652" class="font card-title" fill="#9a3412" text-anchor="middle">Stage Goal</text>
+    <text x="960" y="680" class="font card-text" text-anchor="middle">Summarize the capability shift in one crisp sentence</text>
+  </g>
+
+  <path d="M960 745 L960 790" fill="none" stroke="#16a34a" stroke-width="2.2" marker-end="url(#arrow-green)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="790" width="1780" height="210" rx="18" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="1.2"/>
+    <text x="98" y="827" class="font section-title" fill="#9d174d">Section Three</text>
+
+    <rect x="150" y="875" width="360" height="70" rx="10" fill="#ffffff" stroke="#db2777" stroke-width="1.4"/>
+    <text x="330" y="903" class="font card-title" fill="#9d174d" text-anchor="middle">Output</text>
+    <text x="330" y="927" class="font card-text" text-anchor="middle">Short output explanation</text>
+
+    <rect x="620" y="875" width="360" height="70" rx="10" fill="#ffffff" stroke="#db2777" stroke-width="1.4"/>
+    <text x="800" y="903" class="font card-title" fill="#9d174d" text-anchor="middle">Output</text>
+    <text x="800" y="927" class="font card-text" text-anchor="middle">Short output explanation</text>
+
+    <rect x="1090" y="875" width="360" height="70" rx="10" fill="#ffffff" stroke="#db2777" stroke-width="1.4"/>
+    <text x="1270" y="903" class="font card-title" fill="#9d174d" text-anchor="middle">Output</text>
+    <text x="1270" y="927" class="font card-text" text-anchor="middle">Short output explanation</text>
+  </g>
+
+  <path d="M510 910 L620 910" fill="none" stroke="#db2777" stroke-width="2" marker-end="url(#arrow-pink)"/>
+  <path d="M980 910 L1090 910" fill="none" stroke="#db2777" stroke-width="2" marker-end="url(#arrow-pink)"/>
+</svg>

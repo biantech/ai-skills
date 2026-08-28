@@ -1,0 +1,6 @@
+interface:
+  display_name: "Minimal Query Planner"
+  short_description: "Plan low-impact read-only runtime data queries"
+  default_prompt: "Use $minimal-query-planner to gather the smallest safe set of runtime evidence for this investigation."
+policy:
+  allow_implicit_invocation: true

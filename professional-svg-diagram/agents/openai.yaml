@@ -1,0 +1,4 @@
+interface:
+  display_name: "Professional SVG Diagram"
+  short_description: "Create polished, editable SVG report diagrams"
+  default_prompt: "Use $professional-svg-diagram to create an editable, executive-ready SVG with the layout that best matches my content."

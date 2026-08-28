@@ -57,6 +57,19 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
+
+def configure_output_logger() -> logging.Logger:
+    """Create a stdout logger that preserves the CLI output contract."""
+    output_logger = logging.getLogger(f"{__name__}.output")
+    output_logger.setLevel(logging.INFO)
+    output_logger.propagate = False
+    output_logger.handlers.clear()
+
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setFormatter(logging.Formatter("%(message)s"))
+    output_logger.addHandler(handler)
+    return output_logger
+
 # ---------------------------------------------------------------------------
 # Engine factory with QueuePool
 # ---------------------------------------------------------------------------
@@ -163,13 +176,14 @@ def main():
     parser.add_argument("--format", "-f", choices=["markdown", "json"], default="markdown",
                         help="Output format. Default: markdown")
     args = parser.parse_args()
+    output_log = configure_output_logger()
 
     try:
         data = run_query(args.env, args.sql)
         if args.format == "json":
-            print(format_json(data))
+            output_log.info("%s", format_json(data))
         else:
-            print(format_markdown(data))
+            output_log.info("%s", format_markdown(data))
     except Exception as exc:
         log.error("Query failed: %s", exc)
         sys.exit(1)

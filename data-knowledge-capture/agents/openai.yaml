@@ -1,0 +1,7 @@
+interface:
+  display_name: "Data Knowledge Capture"
+  short_description: "Capture reusable knowledge from completed data tasks"
+  default_prompt: "Use $data-knowledge-capture to find relevant prior data-task knowledge or prepare a sanitized reusable artifact for an explicitly chosen repository."
+
+policy:
+  allow_implicit_invocation: true

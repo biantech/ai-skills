@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Technical roadmap timeline template</title>
+  <desc>Four delivery phases arranged on a left-to-right timeline with outcomes and milestones.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 z" fill="#2563eb"/></marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.07"/></filter>
+    <style>
+      .font { font-family: Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif; }
+      .title { font-size: 36px; font-weight: 760; fill: #0f172a; }
+      .subtitle { font-size: 18px; fill: #475569; }
+      .phase { font-size: 20px; font-weight: 720; }
+      .card-title { font-size: 16px; font-weight: 720; fill: #0f172a; }
+      .card-text { font-size: 13px; fill: #475569; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1920" height="1080" fill="#ffffff"/>
+  <text x="80" y="68" class="font title">Roadmap Title</text>
+  <text x="82" y="104" class="font subtitle">Describe the capability progression and measurable outcomes</text>
+  <line x1="210" y1="500" x2="1710" y2="500" stroke="#cbd5e1" stroke-width="6" marker-end="url(#arrow)"/>
+  <g filter="url(#shadow)">
+    <rect x="110" y="205" width="380" height="220" rx="14" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.4"/>
+    <rect x="550" y="575" width="380" height="220" rx="14" fill="#fff7ed" stroke="#f97316" stroke-width="1.4"/>
+    <rect x="990" y="205" width="380" height="220" rx="14" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.4"/>
+    <rect x="1430" y="575" width="380" height="220" rx="14" fill="#fdf2f8" stroke="#db2777" stroke-width="1.4"/>
+  </g>
+  <circle cx="300" cy="500" r="14" fill="#64748b"/><circle cx="740" cy="500" r="14" fill="#f97316"/>
+  <circle cx="1180" cy="500" r="14" fill="#22c55e"/><circle cx="1620" cy="500" r="14" fill="#db2777"/>
+  <line x1="300" y1="425" x2="300" y2="486" stroke="#64748b" stroke-width="2"/>
+  <line x1="740" y1="514" x2="740" y2="575" stroke="#f97316" stroke-width="2"/>
+  <line x1="1180" y1="425" x2="1180" y2="486" stroke="#22c55e" stroke-width="2"/>
+  <line x1="1620" y1="514" x2="1620" y2="575" stroke="#db2777" stroke-width="2"/>
+  <text x="145" y="250" class="font phase" fill="#334155">Phase 1 · Foundation</text>
+  <text x="145" y="300" class="font card-title">Stage capability</text><text x="145" y="330" class="font card-text">Establish the minimum reliable baseline</text>
+  <text x="585" y="620" class="font phase" fill="#9a3412">Phase 2 · Scale</text>
+  <text x="585" y="670" class="font card-title">Stage capability</text><text x="585" y="700" class="font card-text">Expand coverage and operating capacity</text>
+  <text x="1025" y="250" class="font phase" fill="#166534">Phase 3 · Optimize</text>
+  <text x="1025" y="300" class="font card-title">Stage capability</text><text x="1025" y="330" class="font card-text">Improve quality with measurable feedback</text>
+  <text x="1465" y="620" class="font phase" fill="#9d174d">Phase 4 · Evolve</text>
+  <text x="1465" y="670" class="font card-title">Target state</text><text x="1465" y="700" class="font card-text">Deliver the intended business outcome</text>
+  <rect x="260" y="875" width="1400" height="90" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+  <text x="960" y="912" class="font card-title" text-anchor="middle">Roadmap outcome</text>
+  <text x="960" y="943" class="font card-text" text-anchor="middle">Summarize the capability shift in one measurable sentence</text>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Capability matrix template</title>
+  <desc>A two-by-two matrix for comparing capabilities, priorities, value, or implementation effort.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.07"/></filter>
+    <style>
+      .font { font-family: Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif; }
+      .title { font-size: 36px; font-weight: 760; fill: #0f172a; }
+      .subtitle { font-size: 18px; fill: #475569; }
+      .quadrant { font-size: 21px; font-weight: 720; }
+      .card-title { font-size: 16px; font-weight: 720; fill: #0f172a; }
+      .card-text { font-size: 13px; fill: #475569; }
+      .axis { font-size: 15px; font-weight: 600; fill: #475569; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1920" height="1080" fill="#ffffff"/>
+  <text x="80" y="68" class="font title">Capability Matrix Title</text>
+  <text x="82" y="104" class="font subtitle">Compare value, priority, maturity, risk, or implementation effort</text>
+  <text x="960" y="1025" class="font axis" text-anchor="middle">Horizontal dimension: low → high</text>
+  <text x="72" y="560" class="font axis" text-anchor="middle" transform="rotate(-90 72 560)">Vertical dimension: low → high</text>
+  <g filter="url(#shadow)">
+    <rect x="150" y="160" width="780" height="370" rx="14" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.4"/>
+    <rect x="990" y="160" width="780" height="370" rx="14" fill="#f0fdf4" stroke="#86efac" stroke-width="1.4"/>
+    <rect x="150" y="570" width="780" height="370" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.4"/>
+    <rect x="990" y="570" width="780" height="370" rx="14" fill="#fff7ed" stroke="#fdba74" stroke-width="1.4"/>
+  </g>
+  <text x="190" y="205" class="font quadrant" fill="#1d4ed8">Invest selectively</text>
+  <text x="1030" y="205" class="font quadrant" fill="#166534">Prioritize</text>
+  <text x="190" y="615" class="font quadrant" fill="#334155">Maintain</text>
+  <text x="1030" y="615" class="font quadrant" fill="#9a3412">Simplify or defer</text>
+  <g>
+    <rect x="210" y="260" width="300" height="100" rx="12" fill="#ffffff" stroke="#3b82f6" stroke-width="1.4"/>
+    <text x="240" y="298" class="font card-title">Capability</text><text x="240" y="329" class="font card-text">Explain placement in one line</text>
+    <rect x="1050" y="260" width="300" height="100" rx="12" fill="#ffffff" stroke="#22c55e" stroke-width="1.4"/>
+    <text x="1080" y="298" class="font card-title">Capability</text><text x="1080" y="329" class="font card-text">Explain placement in one line</text>
+    <rect x="210" y="670" width="300" height="100" rx="12" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4"/>
+    <text x="240" y="708" class="font card-title">Capability</text><text x="240" y="739" class="font card-text">Explain placement in one line</text>
+    <rect x="1050" y="670" width="300" height="100" rx="12" fill="#ffffff" stroke="#f97316" stroke-width="1.4"/>
+    <text x="1080" y="708" class="font card-title">Capability</text><text x="1080" y="739" class="font card-text">Explain placement in one line</text>
+  </g>
+</svg>

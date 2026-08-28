@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <title>Decision flow diagram template</title>
+  <desc>A vertical validation flow that branches into success and fallback outcomes.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 z" fill="#64748b"/></marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.07"/></filter>
+    <style>
+      .font { font-family: Inter, PingFang SC, Microsoft YaHei, Arial, sans-serif; }
+      .title { font-size: 36px; font-weight: 760; fill: #0f172a; }
+      .subtitle { font-size: 18px; fill: #475569; }
+      .node-title { font-size: 17px; font-weight: 720; fill: #0f172a; }
+      .node-text { font-size: 13px; fill: #475569; }
+      .label { font-size: 14px; font-weight: 700; fill: #475569; }
+    </style>
+  </defs>
+  <rect x="0" y="0" width="1920" height="1080" fill="#ffffff"/>
+  <text x="80" y="68" class="font title">Decision Flow Title</text>
+  <text x="82" y="104" class="font subtitle">Make validation, routing, and fallback behavior explicit</text>
+  <g filter="url(#shadow)">
+    <rect x="760" y="155" width="400" height="100" rx="14" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <polygon points="960,335 1160,455 960,575 760,455" fill="#fff7ed" stroke="#f97316" stroke-width="1.7"/>
+    <rect x="280" y="665" width="400" height="120" rx="14" fill="#fdf2f8" stroke="#db2777" stroke-width="1.5"/>
+    <rect x="1240" y="665" width="400" height="120" rx="14" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5"/>
+    <rect x="760" y="865" width="400" height="100" rx="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  </g>
+  <text x="960" y="195" class="font node-title" text-anchor="middle">Input or request</text>
+  <text x="960" y="225" class="font node-text" text-anchor="middle">State the data entering the decision</text>
+  <text x="960" y="447" class="font node-title" text-anchor="middle">Decision condition?</text>
+  <text x="960" y="478" class="font node-text" text-anchor="middle">Use a testable business rule</text>
+  <text x="480" y="710" class="font node-title" text-anchor="middle">Fallback path</text>
+  <text x="480" y="742" class="font node-text" text-anchor="middle">Explain exception handling</text>
+  <text x="1440" y="710" class="font node-title" text-anchor="middle">Success path</text>
+  <text x="1440" y="742" class="font node-text" text-anchor="middle">Explain the intended outcome</text>
+  <text x="960" y="905" class="font node-title" text-anchor="middle">Final response</text>
+  <text x="960" y="935" class="font node-text" text-anchor="middle">Return a consistent observable result</text>
+  <path d="M960 255 V330" fill="none" stroke="#64748b" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <path d="M760 455 H480 V660" fill="none" stroke="#db2777" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <path d="M1160 455 H1440 V660" fill="none" stroke="#16a34a" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <path d="M480 785 V815 H900 V860" fill="none" stroke="#64748b" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <path d="M1440 785 V815 H1020 V860" fill="none" stroke="#64748b" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <text x="625" y="435" class="font label">No</text><text x="1275" y="435" class="font label">Yes</text>
+</svg>

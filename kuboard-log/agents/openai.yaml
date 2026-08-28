@@ -1,0 +1,6 @@
+interface:
+  display_name: "Kuboard Log"
+  short_description: "Read Kuboard Kubernetes logs via no-proxy API"
+  default_prompt: "Use $kuboard-log to read the requested Kuboard Kubernetes logs through the authenticated no-proxy API."
+policy:
+  allow_implicit_invocation: true

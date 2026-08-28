@@ -1,0 +1,6 @@
+interface:
+  display_name: "Jenkins API Build"
+  short_description: "Inspect and run approved Jenkins build workflows"
+  default_prompt: "Use $jenkins-api-build to inspect or run the explicitly requested Jenkins job and track its result."
+policy:
+  allow_implicit_invocation: true

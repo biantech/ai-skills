@@ -1,0 +1,6 @@
+interface:
+  display_name: "Gateway API Debug"
+  short_description: "Debug gateway routes with verified auth and safe calls"
+  default_prompt: "Use $gateway-api-debug to confirm this gateway route and authentication behavior, then make only the authorized live call."
+policy:
+  allow_implicit_invocation: true
