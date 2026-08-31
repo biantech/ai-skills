@@ -1,0 +1,4 @@
+interface:
+  display_name: "Branch Promote"
+  short_description: "Safely inspect and promote changes between Git branches"
+  default_prompt: "Use $branch-promote to inspect or promote explicitly named source branches into explicitly named target branches."

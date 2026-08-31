@@ -3,7 +3,7 @@ set -euo pipefail
 unsetopt XTRACE 2>/dev/null || true
 
 readonly JENKINS_BASE_URL="${JENKINS_BASE_URL:-https://jenkins-dev.goldenmilestech.net}"
-readonly DEFAULT_DEV_USER="fanxr"
+readonly DEFAULT_DEV_USER="bianjq"
 readonly DEFAULT_UAT_RC_USER="tengxq"
 
 die() {
@@ -13,14 +13,14 @@ die() {
 
 usage() {
   print -u2 -r -- "Usage:
-  $0 inspect <dev|uat|rc> <search|3rd-modules|gateway>
-  $0 build <dev|uat|rc> <search|3rd-modules|gateway>
+  $0 inspect <dev|uat|rc> <project>
+  $0 build <dev|uat|rc> <project>
   $0 build-modules <dev|uat|rc> <api>...
   $0 build-api <dev|uat|rc> search [--gateway]
   $0 queue-status <dev|uat|rc> <queue-id>
-  $0 wait-queue <dev|uat|rc> <search|3rd-modules|gateway> <queue-id>
-  $0 status <dev|uat|rc> <search|3rd-modules|gateway> <build-number>
-  $0 wait-build <dev|uat|rc> <search|3rd-modules|gateway> <build-number>"
+  $0 wait-queue <dev|uat|rc> <project> <queue-id>
+  $0 status <dev|uat|rc> <project> <build-number>
+  $0 wait-build <dev|uat|rc> <project> <build-number>"
   exit 1
 }
 
@@ -65,7 +65,12 @@ resolve_job() {
   local project="$2"
   environment_user "$environment" >/dev/null
   case "$project" in
-    search) print -r -- "search-jar-${environment}" ;;
+    authentication-content-starter) print -r -- "3rd-authentication-content-starter-jar-${environment}" ;;
+    common) print -r -- "3rd-common-jar-${environment}" ;;
+    justauth-spring-boot-starter) print -r -- "3rd-justauth-spring-boot-starter-jar-${environment}" ;;
+    authentication|push|content|file|finance|gateway-app|location|marketing|merchant|note|order|ranking|recommend|reservation|review|search|task|user)
+      print -r -- "${project}-jar-${environment}"
+      ;;
     3rd-modules) print -r -- "3rd-modules-${environment}" ;;
     gateway) print -r -- "gateway-app-jar-${environment}" ;;
     *) die "Unknown Jenkins project: $project" ;;
@@ -243,6 +248,17 @@ queue_build() {
 build() {
   local environment="$1"
   local job="$2"
+  if [[ "$job" == "3rd-common-jar-${environment}" ||
+        "$job" == "3rd-authentication-content-starter-jar-${environment}" ]]; then
+    local target_version="${JENKINS_TARGET_VERSION:-1.0.0-SNAPSHOT}"
+    if [[ "$job" == "3rd-common-jar-${environment}" ]]; then
+      target_version="${JENKINS_COMMON_TARGET_VERSION:-$target_version}"
+    fi
+    queue_build "$environment" "$job" \
+      --data-urlencode "TARGET_VERSION=${target_version}" \
+      "${JENKINS_BASE_URL}/job/${job}/buildWithParameters"
+    return
+  fi
   queue_build "$environment" "$job" "${JENKINS_BASE_URL}/job/${job}/build"
 }
 

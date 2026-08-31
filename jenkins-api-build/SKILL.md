@@ -38,11 +38,33 @@ https://jenkins-dev.goldenmilestech.net
 
 Supported project aliases:
 
-- `search` -> `search-jar-<environment>`
-- `3rd-modules` -> `3rd-modules-<environment>`
-- `gateway` -> `gateway-app-jar-<environment>`
+| Alias | Resolved Job |
+|---|---|
+| `authentication` | `authentication-jar-<environment>` |
+| `authentication-content-starter` | `3rd-authentication-content-starter-jar-<environment>` |
+| `push` | `push-jar-<environment>` |
+| `common` | `3rd-common-jar-<environment>` |
+| `content` | `content-jar-<environment>` |
+| `file` | `file-jar-<environment>` |
+| `finance` | `finance-jar-<environment>` |
+| `gateway-app` or `gateway` | `gateway-app-jar-<environment>` |
+| `justauth-spring-boot-starter` | `3rd-justauth-spring-boot-starter-jar-<environment>` |
+| `location` | `location-jar-<environment>` |
+| `marketing` | `marketing-jar-<environment>` |
+| `merchant` | `merchant-jar-<environment>` |
+| `note` | `note-jar-<environment>` |
+| `order` | `order-jar-<environment>` |
+| `ranking` | `ranking-jar-<environment>` |
+| `recommend` | `recommend-jar-<environment>` |
+| `reservation` | `reservation-jar-<environment>` |
+| `review` | `review-jar-<environment>` |
+| `search` | `search-jar-<environment>` |
+| `task` | `task-jar-<environment>` |
+| `user` | `user-jar-<environment>` |
+| `3rd-modules` | `3rd-modules-<environment>` |
 
 API names such as `search` and `user` are Boolean parameters on `3rd-modules-<environment>`. The client reads live parameter definitions and rejects names that are not defined Boolean parameters.
+The `common` and `authentication-content-starter` Jobs use `TARGET_VERSION`, defaulting to `1.0.0-SNAPSHOT`. Override both with `JENKINS_TARGET_VERSION`, or override only `common` with the backwards-compatible `JENKINS_COMMON_TARGET_VERSION`.
 
 The controller and usernames may be overridden only through approved environment configuration. `JENKINS_BASE_URL` must remain a single HTTPS origin without a path.
 

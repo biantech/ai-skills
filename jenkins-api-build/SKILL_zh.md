@@ -32,17 +32,38 @@ https://jenkins-dev.goldenmilestech.net
 
 | 环境 | Jenkins 视图 | 默认用户 | Job 后缀 |
 |---|---|---|---|
-| Dev | `view/dev` | `fanxr` | `-dev` |
+| Dev | `view/dev` | `bianjq` | `-dev` |
 | UAT | `view/uat` | `tengxq` | `-uat` |
 | RC | `view/rc` | `tengxq` | `-rc` |
 
-支持的项目别名：
+支援的專案別名：
 
-- `search` -> `search-jar-<environment>`
-- `3rd-modules` -> `3rd-modules-<environment>`
-- `gateway` -> `gateway-app-jar-<environment>`
+| 別名 | 對應 Job |
+|---|---|
+| `authentication` | `authentication-jar-<environment>` |
+| `authentication-content-starter` | `3rd-authentication-content-starter-jar-<environment>` |
+| `push` | `push-jar-<environment>` |
+| `common` | `3rd-common-jar-<environment>` |
+| `content` | `content-jar-<environment>` |
+| `file` | `file-jar-<environment>` |
+| `finance` | `finance-jar-<environment>` |
+| `gateway-app` 或 `gateway` | `gateway-app-jar-<environment>` |
+| `justauth-spring-boot-starter` | `3rd-justauth-spring-boot-starter-jar-<environment>` |
+| `location` | `location-jar-<environment>` |
+| `marketing` | `marketing-jar-<environment>` |
+| `merchant` | `merchant-jar-<environment>` |
+| `note` | `note-jar-<environment>` |
+| `order` | `order-jar-<environment>` |
+| `ranking` | `ranking-jar-<environment>` |
+| `recommend` | `recommend-jar-<environment>` |
+| `reservation` | `reservation-jar-<environment>` |
+| `review` | `review-jar-<environment>` |
+| `search` | `search-jar-<environment>` |
+| `task` | `task-jar-<environment>` |
+| `user` | `user-jar-<environment>` |
+| `3rd-modules` | `3rd-modules-<environment>` |
 
-`search`、`user` 等 API 名称是 `3rd-modules-<environment>` 的 Boolean 参数。客户端会读取实时参数定义，并拒绝不是已定义 Boolean 参数的名称。
+`search`、`user` 等 API 名稱是 `3rd-modules-<environment>` 的 Boolean 參數。客戶端會讀取即時參數定義，並拒絕不是已定義 Boolean 參數的名稱。`common` 與 `authentication-content-starter` 使用 `TARGET_VERSION`，預設為 `1.0.0-SNAPSHOT`；可透過 `JENKINS_TARGET_VERSION` 同時覆蓋，或以相容變數 `JENKINS_COMMON_TARGET_VERSION` 僅覆蓋 `common`。
 
 只有经过批准的环境配置才能覆盖控制器和用户名。`JENKINS_BASE_URL` 必须是一个不含路径的 HTTPS origin。
 

@@ -27,7 +27,7 @@ state_path = Path(os.environ["FAKE_JENKINS_STATE"])
 if state_path.exists():
     state = json.loads(state_path.read_text())
 else:
-    state = {"next_queue": 101, "queues": {}, "posts": []}
+    state = {"next_queue": 101, "queues": {}, "posts": [], "post_arguments": []}
 
 
 def save() -> None:
@@ -47,6 +47,7 @@ if "--request" in args and "POST" in args:
     number = queue_id + 1000
     state["queues"][str(queue_id)] = {"job": job, "number": number}
     state["posts"].append(job)
+    state.setdefault("post_arguments", []).append(args)
     save()
     if os.environ.get("FAKE_CROSS_ORIGIN") == "1":
         location = f"https://example.invalid/queue/item/{queue_id}/"

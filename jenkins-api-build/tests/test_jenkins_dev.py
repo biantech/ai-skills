@@ -60,6 +60,48 @@ class JenkinsDevScriptTest(unittest.TestCase):
         if self.state_file.exists():
             self.assertEqual([], json.loads(self.state_file.read_text())["posts"])
 
+    def test_common_build_uses_parameterized_default_version(self) -> None:
+        result = self.run_script("build", "dev", "common", check=True)
+        self.assertEqual("3rd-common-jar-dev", json.loads(result.stdout)["job"])
+        state = json.loads(self.state_file.read_text())
+        self.assertEqual(["3rd-common-jar-dev"], state["posts"])
+        self.assertIn("TARGET_VERSION=1.0.0-SNAPSHOT", state["post_arguments"][0])
+
+    def test_supported_aliases_resolve_to_expected_jobs(self) -> None:
+        expected_jobs = {
+            "authentication": "authentication-jar-dev",
+            "authentication-content-starter": "3rd-authentication-content-starter-jar-dev",
+            "push": "push-jar-dev",
+            "common": "3rd-common-jar-dev",
+            "content": "content-jar-dev",
+            "file": "file-jar-dev",
+            "finance": "finance-jar-dev",
+            "gateway-app": "gateway-app-jar-dev",
+            "justauth-spring-boot-starter": "3rd-justauth-spring-boot-starter-jar-dev",
+            "location": "location-jar-dev",
+            "marketing": "marketing-jar-dev",
+            "merchant": "merchant-jar-dev",
+            "note": "note-jar-dev",
+            "order": "order-jar-dev",
+            "ranking": "ranking-jar-dev",
+            "recommend": "recommend-jar-dev",
+            "reservation": "reservation-jar-dev",
+            "review": "review-jar-dev",
+            "search": "search-jar-dev",
+            "task": "task-jar-dev",
+            "user": "user-jar-dev",
+        }
+        for alias, expected_job in expected_jobs.items():
+            with self.subTest(alias=alias):
+                result = self.run_script("inspect", "dev", alias, check=True)
+                self.assertEqual(expected_job, json.loads(result.stdout)["name"])
+
+    def test_authentication_content_starter_uses_parameterized_default_version(self) -> None:
+        result = self.run_script("build", "dev", "authentication-content-starter", check=True)
+        self.assertEqual("3rd-authentication-content-starter-jar-dev", json.loads(result.stdout)["job"])
+        state = json.loads(self.state_file.read_text())
+        self.assertIn("TARGET_VERSION=1.0.0-SNAPSHOT", state["post_arguments"][0])
+
     def test_cross_origin_queue_location_is_rejected(self) -> None:
         self.env["FAKE_CROSS_ORIGIN"] = "1"
         result = self.run_script("build", "dev", "search")
