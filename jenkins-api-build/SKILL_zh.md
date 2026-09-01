@@ -5,7 +5,7 @@ description: 通过 Jenkins Remote Access API 检查、触发并跟踪已配置�
 
 # Jenkins API 构建
 
-使用随附客户端访问已配置的 Jenkins 控制器。每个构建 POST 都是外部副作用；检查和状态查询属于只读操作。
+使用 `scripts/jenkins-api-build.sh` 作为已配置 Jenkins 控制器的稳定入口。默认执行 `scripts/jenkins-dev.py`；设置 `JENKINS_CLIENT_IMPL=shell` 时执行原始 Shell 实现 `scripts/jenkins-dev.sh`。每个构建 POST 都是外部副作用；检查和状态查询属于只读操作。
 
 本文档与 [SKILL.md](SKILL.md) 对应。修改任一版本时，应保持两者行为一致。
 
@@ -93,10 +93,18 @@ export JENKINS_UAT_RC_TOKEN_FILE='/approved/private/uat-rc-token'
 
 ```bash
 JENKINS_SKILL_DIR="${CODEX_HOME:-$HOME/.codex}/skills/jenkins-api-build"
-JENKINS_CLIENT="$JENKINS_SKILL_DIR/scripts/jenkins-dev.sh"
+JENKINS_CLIENT="$JENKINS_SKILL_DIR/scripts/jenkins-api-build.sh"
 ```
 
-客户端依赖 `zsh`、`curl` 和 `jq`。
+兼容入口依赖 `zsh` 和 `python3`；Python 客户端依赖 `curl` 和 `jq`。
+
+临时使用原始 Shell 实现：
+
+```bash
+JENKINS_CLIENT_IMPL=shell "$JENKINS_CLIENT" inspect dev note
+```
+
+默认使用 Python 实现，也可以显式设置 `JENKINS_CLIENT_IMPL=python`。
 
 ## 只读检查
 
@@ -185,4 +193,5 @@ Queue ID 和构建号必须是十进制整数。复用凭据前，客户端会�
 - 包中必须保留 `SKILL_zh.md`、`agents/openai.yaml` 和集成测试。
 - 绝不添加示例或回退 token，即使它看起来已经过期。
 - 认证、crumb、队列验证和依赖顺序只保留一个权威客户端实现。
-- 修改后运行官方 Skill 校验、`zsh -n`、Python 集成测试和凭据模式扫描。
+- `jenkins-api-build.sh` 负责选择实现，`jenkins-dev.py` 是 Python 实现，`jenkins-dev.sh` 保留原始 Shell 实现；不要在入口中重复实现 Jenkins 逻辑。
+- 修改后运行官方 Skill 校验、`zsh -n scripts/jenkins-api-build.sh scripts/jenkins-dev.sh`、`PYTHONPYCACHEPREFIX=/tmp/jenkins-api-build-pycache python3 -m py_compile scripts/jenkins-dev.py`、Python 集成测试和凭据模式扫描。

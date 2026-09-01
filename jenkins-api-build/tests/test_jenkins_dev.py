@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = SKILL_ROOT / "scripts" / "jenkins-dev.sh"
+SCRIPT = SKILL_ROOT / "scripts" / "jenkins-api-build.sh"
 FAKE_CURL = SKILL_ROOT / "tests" / "fake_curl.py"
 
 
@@ -38,6 +38,17 @@ class JenkinsDevScriptTest(unittest.TestCase):
         return subprocess.run(
             ["zsh", str(SCRIPT), *args],
             env=self.env,
+            capture_output=True,
+            text=True,
+            check=check,
+        )
+
+    def run_shell_script(self, *args: str, check: bool = False) -> subprocess.CompletedProcess[str]:
+        environment = self.env.copy()
+        environment["JENKINS_CLIENT_IMPL"] = "shell"
+        return subprocess.run(
+            ["zsh", str(SCRIPT), *args],
+            env=environment,
             capture_output=True,
             text=True,
             check=check,
@@ -123,6 +134,10 @@ class JenkinsDevScriptTest(unittest.TestCase):
     def test_package_contains_localized_and_ui_metadata(self) -> None:
         self.assertTrue((SKILL_ROOT / "SKILL_zh.md").is_file())
         self.assertTrue((SKILL_ROOT / "agents" / "openai.yaml").is_file())
+
+    def test_shell_implementation_can_be_selected(self) -> None:
+        result = self.run_shell_script("inspect", "dev", "note", check=True)
+        self.assertEqual("note-jar-dev", json.loads(result.stdout)["name"])
 
 
 if __name__ == "__main__":

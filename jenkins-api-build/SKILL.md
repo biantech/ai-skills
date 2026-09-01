@@ -5,7 +5,7 @@ description: Inspect, trigger, and track configured Jenkins Dev, UAT, and RC job
 
 # Jenkins API Build
 
-Use the bundled client for the configured Jenkins controller. Treat every build POST as an external side effect; inspection and status requests are read-only.
+Use `scripts/jenkins-api-build.sh` as the stable entrypoint for the configured Jenkins controller. It defaults to `scripts/jenkins-dev.py`; set `JENKINS_CLIENT_IMPL=shell` to use the original Shell implementation in `scripts/jenkins-dev.sh`. Treat every build POST as an external side effect; inspection and status requests are read-only.
 
 The Chinese version is maintained in [SKILL_zh.md](SKILL_zh.md). Keep both files behaviorally aligned.
 
@@ -94,10 +94,18 @@ Resolve the installed Skill path without hardcoding a personal home directory:
 
 ```bash
 JENKINS_SKILL_DIR="${CODEX_HOME:-$HOME/.codex}/skills/jenkins-api-build"
-JENKINS_CLIENT="$JENKINS_SKILL_DIR/scripts/jenkins-dev.sh"
+JENKINS_CLIENT="$JENKINS_SKILL_DIR/scripts/jenkins-api-build.sh"
 ```
 
-The client requires `zsh`, `curl`, and `jq`.
+The compatibility entrypoint requires `zsh` and `python3`; the Python client requires `curl` and `jq`.
+
+To temporarily use the original Shell implementation:
+
+```bash
+JENKINS_CLIENT_IMPL=shell "$JENKINS_CLIENT" inspect dev note
+```
+
+The default Python implementation is selected with `JENKINS_CLIENT_IMPL=python` or when the variable is unset.
 
 ## Read-Only Inspection
 
@@ -186,4 +194,5 @@ Report the environment, resolved Job, requested Boolean parameters, queue ID, bu
 - Keep `SKILL_zh.md`, `agents/openai.yaml`, and the integration tests in the package.
 - Never add example or fallback tokens, even if they appear expired.
 - Keep one canonical client for authentication, crumb handling, queue validation, and dependency ordering.
-- Run the official Skill validator, `zsh -n`, the Python integration tests, and a secret-pattern scan after changes.
+- Keep `jenkins-api-build.sh` as the selector, `jenkins-dev.py` as the Python implementation, and `jenkins-dev.sh` as the preserved Shell implementation. Do not duplicate Jenkins logic in the selector.
+- Run the official Skill validator, `zsh -n scripts/jenkins-api-build.sh scripts/jenkins-dev.sh`, `PYTHONPYCACHEPREFIX=/tmp/jenkins-api-build-pycache python3 -m py_compile scripts/jenkins-dev.py`, the Python integration tests, and a secret-pattern scan after changes.
