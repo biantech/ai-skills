@@ -1,11 +1,11 @@
 ---
 name: jenkins-api-build
-description: 通过 Jenkins Remote Access API 检查、触发并跟踪已配置的 Jenkins Dev、UAT 和 RC Job，包括经过验证的参数化模块构建和依赖感知构建链。适用于用户明确要求 Jenkins 构建，或查询受支持 Job 的队列及构建状态。不适用于推断部署意图、触发未指定环境或参数、修改 Job 配置或执行 Jenkins 管理操作。
+description: 通过 Jenkins Remote Access API 检查并触发已配置的 Jenkins Dev、UAT 和 RC Job，并按需查询队列或构建状态，包括经过验证的参数化模块构建和依赖感知构建链。适用于用户明确要求 Jenkins 构建，或查询受支持 Job 的队列及构建状态。不适用于推断部署意图、触发未指定环境或参数、修改 Job 配置或执行 Jenkins 管理操作。
 ---
 
 # Jenkins API 构建
 
-使用 `scripts/jenkins-api-build.sh` 作为已配置 Jenkins 控制器的稳定入口。默认执行 `scripts/jenkins-dev.py`；设置 `JENKINS_CLIENT_IMPL=shell` 时执行原始 Shell 实现 `scripts/jenkins-dev.sh`。每个构建 POST 都是外部副作用；检查和状态查询属于只读操作。
+使用 `scripts/jenkins-api-build.sh` 作为已配置 Jenkins 控制器的稳定入口。默认执行 `scripts/jenkins-dev.py`；设置 `JENKINS_CLIENT_IMPL=shell` 时执行原始 Shell 实现 `scripts/jenkins-dev.sh`。每个构建 POST 都是外部副作用；检查和状态查询属于只读操作。普通构建触发后立即返回队列信息，不等待队列或构建完成，除非用户要求监控。
 
 本文档与 [SKILL.md](SKILL.md) 对应。修改任一版本时，应保持两者行为一致。
 
@@ -141,6 +141,8 @@ Queue ID 和构建号必须是十进制整数。复用凭据前，客户端会�
 
 每次 POST 都会在入队前重新获取 CSRF crumb。POST 成功只表示获得同源 Queue ID 和 URL，并不证明构建已经开始或成功。
 
+触发命令在 POST 后不会轮询。返回 Job、Queue ID 和 Queue URL 后即可结束。只有用户明确要求查询或等待时，才使用 `queue-status`、`wait-queue`、`status` 或 `wait-build`。
+
 ## 依赖感知构建链
 
 对于受支持的 API 变化，使用：
@@ -150,7 +152,7 @@ Queue ID 和构建号必须是十进制整数。复用凭据前，客户端会�
 "$JENKINS_CLIENT" build-api rc search --gateway
 ```
 
-`build-api` 会在第一次副作用前完成预检，然后执行以下状态机：
+`build-api` 的目的在于保证依赖顺序，因此例外地需要等待。它会在第一次副作用前完成预检，然后执行以下状态机：
 
 1. 触发所选 `3rd-modules` 参数。
 2. 等待 Queue item 解析为预期构建。

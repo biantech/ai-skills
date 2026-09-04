@@ -72,7 +72,7 @@ class CommandConstructionTests(unittest.TestCase):
             end_time="2026-08-28T16:00:00Z",
             max_rows=50,
             timeout=60,
-            ssh_host="237",
+            ssh_host="server237",
             remote_az="/opt/homebrew/bin/az",
         )
 
@@ -87,7 +87,7 @@ class CommandConstructionTests(unittest.TestCase):
         self.assertIn("BatchMode=yes", command)
         self.assertIn("ServerAliveCountMax=2", command)
         self.assertEqual(command[-3], "--")
-        self.assertEqual(command[-2], "237")
+        self.assertEqual(command[-2], "server237")
         self.assertIn("subscription-id", command[-1])
         self.assertIn("frch-rg-prod", command[-1])
         self.assertIn("frch-appinsights-prod", command[-1])

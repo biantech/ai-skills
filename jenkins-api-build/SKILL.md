@@ -1,11 +1,11 @@
 ---
 name: jenkins-api-build
-description: Inspect, trigger, and track configured Jenkins Dev, UAT, and RC jobs through the Jenkins Remote Access API, including validated parameterized module builds and dependency-aware build chains. Use when the user explicitly requests a Jenkins build or asks for queue/build status on a supported job. Do not use to infer deployment intent, trigger unspecified environments or parameters, alter job configuration, or perform Jenkins administration.
+description: Inspect and trigger configured Jenkins Dev, UAT, and RC jobs through the Jenkins Remote Access API, with optional queue/build status queries, validated parameterized module builds, and dependency-aware build chains. Use when the user explicitly requests a Jenkins build or asks for queue/build status on a supported job. Do not use to infer deployment intent, trigger unspecified environments or parameters, alter job configuration, or perform Jenkins administration.
 ---
 
 # Jenkins API Build
 
-Use `scripts/jenkins-api-build.sh` as the stable entrypoint for the configured Jenkins controller. It defaults to `scripts/jenkins-dev.py`; set `JENKINS_CLIENT_IMPL=shell` to use the original Shell implementation in `scripts/jenkins-dev.sh`. Treat every build POST as an external side effect; inspection and status requests are read-only.
+Use `scripts/jenkins-api-build.sh` as the stable entrypoint for the configured Jenkins controller. It defaults to `scripts/jenkins-dev.py`; set `JENKINS_CLIENT_IMPL=shell` to use the original Shell implementation in `scripts/jenkins-dev.sh`. Treat every build POST as an external side effect; inspection and status requests are read-only. After a normal build trigger, return the queue identity immediately; do not wait for queue or build completion unless the user asks to monitor it.
 
 The Chinese version is maintained in [SKILL_zh.md](SKILL_zh.md). Keep both files behaviorally aligned.
 
@@ -142,6 +142,8 @@ Trigger one or more validated module parameters:
 
 Each POST requests a fresh CSRF crumb immediately before enqueueing. A successful POST returns a same-origin queue ID and URL; it does not yet prove that a build started or succeeded.
 
+Trigger commands do not poll after the POST. Report the returned Job, queue ID, and queue URL, then stop. Use `queue-status`, `wait-queue`, `status`, or `wait-build` only when the user explicitly asks to query or wait for progress/results.
+
 ## Dependency-Aware Chain
 
 For a supported API change, use:
@@ -151,7 +153,7 @@ For a supported API change, use:
 "$JENKINS_CLIENT" build-api rc search --gateway
 ```
 
-`build-api` performs a preflight before the first side effect, then executes this state machine:
+`build-api` is the exception because its purpose is to enforce dependency ordering. It performs a preflight before the first side effect, then executes this state machine:
 
 1. Trigger the selected `3rd-modules` parameter.
 2. Wait for its queue item to resolve to the expected build.

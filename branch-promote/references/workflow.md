@@ -36,16 +36,17 @@ For each repository, record:
 - execution host and absolute repository path;
 - source branch;
 - target branch;
-- inspect, prepare, or push intent;
-- merge-commit permission;
-- source-change commit message, or permission to generate one;
-- source-push authorization;
-- target-push authorization;
+- inspect, prepare, or prepare-and-push intent;
+- whether the initial request explicitly authorizes target push;
 - validation command.
+
+The explicit operation scope authorizes source checkout, safe source commit preparation, `--ff-only` branch updates, any required source push, and a normal merge commit when source and target have diverged. Do not ask separately for these routine steps. Use a concise generated source commit message unless the user supplied one.
+
+Target push may be authorized in the initial request. Wording such as "and push", "push to remote", "并推送", or "推送远端" is explicit authorization. When present, prepare and validate the merge, refresh the remote target, and push without asking again. When absent, prepare and validate the merge, report the result, then ask whether to push and wait for confirmation.
 
 If source is omitted, resolve it with `git branch --show-current`. A detached HEAD cannot supply a default source branch. Never default the target branch.
 
-Check `git status --short --branch`, configured remotes, and whether the source and target refs exist on their configured remotes. For a merge operation, the selected checkout's current named branch must be the source branch. A different current branch is a blocker; do not move its pending changes to the requested source.
+Check `git status --short --branch`, configured remotes, and whether the source and target refs exist on their configured remotes. For a merge operation, switch a clean checkout to the explicitly resolved source branch without requesting another authorization. If a different current branch has pending changes, stop; do not move its changes to the requested source.
 
 ## 2. Commit Current Source Changes
 
@@ -94,19 +95,19 @@ git -C <absolute-repository-path> rev-list --left-right --count <source-remote>/
 For the last command, the left count is remote-only and the right count is local-only:
 
 - `0 0`: source is already published; no source push is needed.
-- `0 N`: local source is ahead; source-push authorization is required.
-- `N 0`: local source is behind; stop and report.
+- `0 N`: local source is ahead; publish it under the operation-scope authorization.
+- `N 0`: local source is behind; update it with `git pull --ff-only <source-remote> <source>`, then verify equality.
 - `N M`: local and remote source diverged; stop and report.
 
-When the remote source does not exist, treat it as unpublished and require explicit authorization to create it. Do not infer source-push authorization from permission to commit, merge, or push the target.
+When the remote source does not exist, treat it as unpublished and publish it under the operation-scope authorization after verifying that its creation matches the explicitly named source branch.
 
-After source-push authorization, publish without force:
+Publish the source without force:
 
 ```bash
 git -C <absolute-repository-path> push <source-remote> <source>:refs/heads/<source>
 ```
 
-If source push is required but not authorized, stop on the source branch and request authorization. If the push is rejected, stop; do not retry by force or rewrite history.
+If the source push is rejected, stop; do not retry by force or rewrite history.
 
 Refresh both branches and verify the source was published exactly:
 
@@ -137,7 +138,7 @@ For the last command, the left count is target-only commits and the right count 
 | 0 | 0 | Identical | No-op |
 | 0 | N | Source ahead | Fast-forward target |
 | N | 0 | Target ahead | No promotion needed |
-| N | M | Diverged | Merge commit only with explicit permission |
+| N | M | Diverged | Create a normal merge commit under the operation scope |
 
 Also inspect:
 
@@ -183,13 +184,13 @@ For source-ahead-only branches:
 git -C <absolute-repository-path> merge --ff-only <source>
 ```
 
-For diverged branches, only after explicit merge-commit authorization:
+For diverged branches:
 
 ```bash
 git -C <absolute-repository-path> merge --no-ff --no-edit <source>
 ```
 
-If the user explicitly requires a merge commit even when fast-forward is possible, use `merge --no-ff --no-edit <source>` only after recording that choice. On conflict, show status, abort the merge, report conflicted paths, and stop. Do not resolve conflicts automatically.
+If the user explicitly requires a merge commit even when fast-forward is possible, use `merge --no-ff --no-edit <source>` after recording that choice. On conflict, show status, abort the merge, report conflicted paths, and stop. Do not resolve conflicts automatically.
 
 ## 7. Validate
 
@@ -204,6 +205,16 @@ If it differs from the recorded preflight target commit, stop and reclassify the
 
 ## 8. Push the Target Only When Authorized
 
+When target push was not explicitly authorized in the initial request, report after validation:
+
+- resulting local target commit;
+- original and current remote target commits;
+- validation command and result;
+- changed-file summary;
+- final checked-out branch and worktree status.
+
+Then explicitly ask whether to push the prepared target. Do not run the push until the user confirms. If the initial request explicitly authorized target push, skip this confirmation and proceed after the normal remote-change check.
+
 Push the prepared commit without force:
 
 ```bash
@@ -214,8 +225,8 @@ If the push is rejected because the branch is protected or changed concurrently,
 
 Multi-repository pushes are not atomic. Report each successful source and target push immediately so a later failure cannot hide partial completion. Prepare and validate every target before the first target push.
 
-Target-push authorization is independent of source-push authorization. If target push is not authorized, leave the validated merge on the local target branch and report that it is pending authorization.
+Without initial target-push authorization, leave the validated merge on the local target branch until confirmation is received. Before every push, refresh the remote target and push only if it still matches the preflight or reported commit.
 
 ## 9. Report
 
-Leave the repository checked out on the target branch. Report the local and remote source commits, original remote target, resulting local target, and pushed target commit IDs; relation counts; source commit message; both push authorizations and results; merge strategy; validation; final current branch; and any remaining blockers.
+Leave the repository checked out on the target branch. Report the local and remote source commits, original remote target, resulting local target, and pushed target commit IDs; relation counts; source commit message; source and target push results; merge strategy; validation; final current branch; and any remaining blockers.

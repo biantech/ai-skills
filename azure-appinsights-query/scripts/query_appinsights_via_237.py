@@ -256,7 +256,7 @@ def load_query(path: str, max_rows: int) -> str:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Run a bounded, read-only Application Insights query through host 237."
+        description="Run a bounded, read-only Application Insights query through server237."
     )
     parser.add_argument("--environment", choices=sorted(ENVIRONMENTS), required=True)
     parser.add_argument("--subscription", required=True, help="Expected Azure subscription ID or name")
@@ -268,7 +268,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--ssh-host",
         type=validated_host,
-        default=os.environ.get("AZURE_QUERY_SSH_HOST", "237"),
+        default=os.environ.get("AZURE_QUERY_SSH_HOST", "server237"),
     )
     parser.add_argument(
         "--remote-az",

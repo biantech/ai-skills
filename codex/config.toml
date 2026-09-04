@@ -1,0 +1,155 @@
+model_provider = "zcloud"
+model = "gpt-5.6-sol"
+model_reasoning_effort = "medium"
+
+#model_provider = "nvidia"
+#model = "nvidia/nemotron-3-super-120b-a12b"
+
+notify = ["/Users/bianjq/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+
+[model_providers]
+
+[model_providers.nvidia]
+name = "NVIDIA Build"
+base_url = "https://integrate.api.nvidia.com/v1"
+wire_api = "responses"
+requires_openai_auth = false
+env_key = "NVIDIA_API_KEY"
+
+[model_providers.zcloud]
+name = "ZCloudAPI"
+base_url = "https://api.zcloudapi.com/v1"
+wire_api = "responses"
+requires_openai_auth = false
+
+[model_providers.zcloud.auth]
+command = "/Users/bianjq/.local/bin/zcloud-token-helper"
+args = ["get", "gpt"]
+timeout_ms = 5000
+refresh_interval_ms = 300000
+
+[marketplaces.openai-bundled]
+source_type = "local"
+source = "/Users/bianjq/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.openai-primary-runtime]
+source_type = "local"
+source = "/Users/bianjq/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."unified-computer-use@openai-bundled"]
+enabled = true
+
+[desktop]
+conversationDetailMode = "STEPS_COMMANDS"
+ambient-suggestions-enabled = true
+followUpQueueMode = "queue"
+enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "ultra", "max"]
+
+[projects."/Users/bianjq/yuanchuan/marketing"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/ranking"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/finance"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/github/ai-agents"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/push"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/order"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/note"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/review"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/task"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/user"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/gateway-app"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/github/ai-skills"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/english/3000c"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/merchant"]
+trust_level = "trusted"
+
+[features]
+js_repl = false
+
+[mcp_servers.node_repl]
+args = []
+command = "/Users/bianjq/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/Users/bianjq/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Users/bianjq/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/bianjq/.codex:/Users/bianjq/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+CODEX_HOME = "/Users/bianjq/.codex"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+BROWSER_USE_TINYSKY_ENABLED = "1"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = ""
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.901.22334"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/bianjq/.codex/plugins/cache/openai-bundled/browser/26.901.22334/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+SKY_CUA_SERVICE_PATH = "/Users/bianjq/.codex/computer-use/Codex Computer Use.app"
+CODEX_CLI_PATH = "/Users/bianjq/Applications/ChatGPT.app/Contents/Resources/codex"
+
+[mcp_servers.computer-use]
+command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
+args = ["mcp"]
+cwd = "."
+enabled = false
+
+[shell_environment_policy.set]
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "9230e2bd8b24b7ac7a0ba6774c64bf0d78ecdabbdd91d0ed627b02a587bae2df"
+
+[tui.model_availability_nux]
+"gpt-5.6-sol" = 4

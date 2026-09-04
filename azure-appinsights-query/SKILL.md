@@ -1,11 +1,11 @@
 ---
 name: azure-appinsights-query
-description: Run bounded, read-only Azure Application Insights KQL queries for UAT, RC, or Prod through the authenticated Azure CLI session on host 237. Use for terminal-based log investigation when the target environment and subscription are known; do not use for Dev logs or Azure resource changes.
+description: Run bounded, read-only Azure Application Insights KQL queries for UAT, RC, or Prod through the authenticated Azure CLI session on server237. Use for terminal-based log investigation when the target environment and subscription are known; do not use for Dev logs or Azure resource changes.
 ---
 
 # Azure Application Insights query
 
-Query UAT, RC, and Prod logs through the existing Azure CLI session on SSH host `237`. Route Dev container-log investigations to `$kuboard-log`. Never expose tokens, secrets, cookies, or one-time authentication codes.
+Query UAT, RC, and Prod logs through the existing Azure CLI session on SSH host `server237` (SSH alias `237` also resolves to this host). Route Dev container-log investigations to `$kuboard-log`. Never expose tokens, secrets, cookies, or one-time authentication codes.
 
 ## Required scope
 
@@ -32,7 +32,8 @@ Treat the table as installation defaults, not evidence that the resource exists.
      --start-time '<start-utc-iso8601>' \
      --end-time '<end-utc-iso8601>' \
      --max-rows 100 \
-     --query-file '/private/path/query.kql'
+     --query-file '/private/path/query.kql' \
+     --ssh-host server237
    ```
 
 The helper verifies the subscription and Application Insights resource, detects workspace-based versus classic mode, applies the API time bounds, and appends a final `take` limit. A final `take` bounds returned rows, not scanned data; keep filters selective and aggregate first when possible. The JSON result reports the resolved subscription, mode, time scope, row count, whether the limit was reached, rows, or a categorized error.

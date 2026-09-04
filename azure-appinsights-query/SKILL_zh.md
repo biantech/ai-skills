@@ -1,11 +1,11 @@
 ---
 name: azure-appinsights-query
-description: 通过主机 237 上已有认证的 Azure CLI，为 UAT、RC 或 Prod 执行有界、只读的 Azure Application Insights KQL 查询。适用于目标环境与订阅已知的终端日志排查；不用于 Dev 日志或 Azure 资源变更。
+description: 通过主机 server237 上已有认证的 Azure CLI，为 UAT、RC 或 Prod 执行有界、只读的 Azure Application Insights KQL 查询。适用于目标环境与订阅已知的终端日志排查；不用于 Dev 日志或 Azure 资源变更。
 ---
 
 # Azure Application Insights 查询
 
-通过 SSH 主机 `237` 上已有的 Azure CLI 会话查询 UAT、RC 和 Prod 日志。Dev 容器日志排查应转用 `$kuboard-log`。不得暴露访问令牌、密钥、Cookie 或一次性认证码。
+通过 SSH 主机 `server237` 上已有的 Azure CLI 会话查询 UAT、RC 和 Prod 日志（SSH 别名 `237` 也指向该主机）。Dev 容器日志排查应转用 `$kuboard-log`。不得暴露访问令牌、密钥、Cookie 或一次性认证码。
 
 ## 必要范围
 
@@ -32,7 +32,8 @@ description: 通过主机 237 上已有认证的 Azure CLI，为 UAT、RC 或 Pr
      --start-time '<UTC ISO-8601 起始时间>' \
      --end-time '<UTC ISO-8601 结束时间>' \
      --max-rows 100 \
-     --query-file '/private/path/query.kql'
+     --query-file '/private/path/query.kql' \
+     --ssh-host server237
    ```
 
 辅助脚本会验证订阅和 Application Insights 资源，自动识别 workspace-based 或 classic 模式，应用 API 时间边界，并追加最终 `take` 限制。最终 `take` 只限制返回行数，不限制扫描数据量；应优先使用选择性过滤和聚合。JSON 结果会报告解析后的订阅、模式、时间范围、行数、是否达到上限、数据行或分类错误。

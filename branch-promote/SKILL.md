@@ -7,7 +7,11 @@ description: Inspect and promote Git changes from an explicit source branch into
 
 Use this Skill to make branch promotion deliberate and auditable. Read [references/workflow.md](references/workflow.md) before performing a promotion or handling diverged branches.
 
-## Required Scope
+## Authorization Model
+
+Use at most two authorization gates. Target-push authorization may be included in the initial request; otherwise request it after merge and validation.
+
+### 1. Operation Scope
 
 Resolve these values before any merge:
 
@@ -17,23 +21,29 @@ Resolve these values before any merge:
 - source remote and target remote; do not assume one remote serves both branches;
 - source branch, defaulting to the current named branch only after reporting that choice;
 - target branch, which must always be explicitly provided by the user;
-- whether a merge commit is allowed when branches have diverged;
-- commit message for pending source changes, or permission to generate a concise message;
 - validation required before push;
-- whether pushing or creating the remote source branch is authorized;
-- whether pushing the target branch is authorized.
 
-Do not infer a target branch from names such as Dev, SIT, UAT, RC, or Prod. Permission to merge does not imply permission to push either branch, create a merge request, trigger Jenkins, or deploy. One user statement may authorize both source and target pushes only when it explicitly names or clearly covers both branches.
+An explicit request to promote the resolved source into the resolved target authorizes the normal preparation workflow: switch to the source, inspect and commit clearly in-scope pending source changes with a concise generated message, update local branches with `--ff-only`, publish the source branch when needed, and create a normal merge commit when the published branches have diverged. Do not pause for separate authorization for those steps.
+
+If pending changes are ambiguous or unsafe, the local and remote source have diverged, histories are unrelated, a merge conflicts, validation fails, or a remote changes concurrently, stop and request a decision. These are exceptional blockers, not routine authorization gates.
+
+### 2. Target Push
+
+Explicit target-push wording in the initial request, such as "and push", "push to remote", "并推送", or "推送远端", authorizes the target push. After merge and validation, refresh the remote target and push without asking again.
+
+If the initial request does not explicitly authorize target push, complete and validate the merge, report the resulting target commit, validation result, changed-file summary, and current remote target commit, then ask whether to push. Push only after the user confirms.
+
+Do not infer a target branch from names such as Dev, SIT, UAT, RC, or Prod. Permission to promote does not imply permission to create a merge request, trigger Jenkins, or deploy.
 
 ## Environment Remote and Host Rules
 
 For this repository layout, use the following mapping unless the user explicitly overrides it:
 
-- `sit` is read from and, when authorized, published to `origin` (the company GitLab remote).
-- For the default `server237` workflow, `uat` and `rc` are read from and, when authorized, published to `github` (the GitHub remote).
+- `sit` is read from and, as part of an authorized promotion, published to `origin` (the company GitLab remote).
+- For the default `server237` workflow, `uat` and `rc` are read from and, after target-push authorization, published to `github` (the GitHub remote).
 - A default remote promotion from `sit` to `uat` or `rc` therefore compares `origin/sit` with `github/uat` or `github/rc`; never substitute `github/sit`, `origin/uat`, or `origin/rc`.
 - For `uat` or `rc` targets, use `ssh server237` and `/Users/tender/Documents/git/yc/<repository>` by default. If the request explicitly says `local`, `本地`, `本机`, or `current machine`, use the current checkout, use `origin` for both source and target, and do not SSH.
-- `server237` is an execution host choice, not permission to push. Source and target pushes still require separate authorization.
+- `server237` is an execution host choice. Operation-scope authorization covers a required source push; target-push authorization may be granted initially or after merge and validation.
 
 ## Git Command Transparency
 
@@ -50,13 +60,13 @@ Before executing every agent-initiated Git command, print the exact command in C
 
 - Read repository instructions and inspect status before fetching or merging.
 - Resolve the execution host and the source/target remotes before the first Git command. For remote execution, print the complete `ssh server237 'git -C /Users/tender/Documents/git/yc/<repository> ...'` command before running it.
-- For merge operations, require the current named branch to be the source branch. Inspect and commit all non-ignored source changes before switching branches; do not stash or discard them.
+- For merge operations, ensure the source branch is checked out before preparing changes. If the checkout is clean, switch to the explicitly resolved source without another authorization. If a different branch has pending changes, stop because their ownership is ambiguous; do not move, stash, or discard them.
 - Show status and both staged and unstaged diffs before staging. Use `git add -A`, show the staged summary, and commit with the user-provided or generated message. If there are no pending changes, skip the commit.
-- Refresh the source and target refs from their respective remotes after the source commit and compare local source with the configured source remote. If the local source has unpublished commits, obtain source-push authorization and push them before merging; without authorization, stop on the source branch. Never push when the remote source is ahead or diverged.
+- Refresh the source and target refs from their respective remotes after the source commit and compare local source with the configured source remote. If the local source is behind only, update it with `pull --ff-only`; if it is ahead only, publish it as part of the authorized operation scope. Never push when the local and remote source have diverged.
 - After publishing, verify local source equals remote source and classify the fresh remote target against the fresh remote source.
 - Switch the selected execution checkout to the target branch, update it from the configured target remote with `git pull --ff-only`, then merge the local source branch into it.
 - For multiple repositories, inspect and commit every source and classify every local-source/remote-source relation before the first source push. After publishing all sources, classify every remote-source/remote-target relation before the first merge.
-- Never interpret any difference as automatic permission to merge.
+- Operation-scope authorization permits a normal merge commit when the target and published source have diverged. It never permits automatic conflict resolution or history rewriting.
 - Never force-push, rewrite history, auto-resolve conflicts, delete branches, or bypass protected-branch policy.
 - If a target ref changes after preflight, stop and re-evaluate; do not retry a rejected push automatically.
 - If the target branch is checked out in another worktree, its local branch has diverged from the remote, or switching would overwrite files, stop and report instead of resetting, stashing, or forcing the switch.
@@ -68,14 +78,14 @@ Classify `remote/target...remote/source` before acting, after the current source
 - identical: report a no-op;
 - source ahead only: fast-forward promotion is allowed when requested;
 - target ahead only: source is already contained, so do not merge backwards;
-- diverged: require explicit permission for a merge commit;
+- diverged: create a normal merge commit under the operation-scope authorization;
 - unrelated history or conflict: stop and report.
 
 For inspect-only requests, report the relation, ahead/behind counts, commits, and changed-file summary, then stop without merging.
 
 ## Promotion Outcome
 
-After an authorized source push succeeds, switch the current checkout to the target branch, fast-forward it from the fresh remote target, merge the local source according to the classified relation, and run repository-appropriate validation. Push the prepared target only with separate target-push authorization. Leave the checkout on the target branch and report that final state.
+After any required source push succeeds, switch the current checkout to the target branch, fast-forward it from the fresh remote target, merge the local source according to the classified relation, and run repository-appropriate validation. If target push was explicitly authorized in the initial request, refresh the remote target and push without another confirmation. Otherwise report the prepared result and ask whether to push. Leave the checkout on the target branch and report that final state.
 
 For multiple repositories, report that source and target pushes are not atomic across repositories. Stop after any failed push and identify which source or target branches were already updated.
 
