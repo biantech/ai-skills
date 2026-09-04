@@ -34,12 +34,9 @@ The following rules apply only when the workspace is under `/Users/bianjq/yuanch
 - 按照项目现有 DDD 分层架构开发。
 - 不分析 `backup/` 目录下的文件。
 - 新增字段和方法时添加简洁注释。
-- 业务逻辑校验失败时使用
-  `com.yuanchuan.common.exception.BusinessException`。
-- String 判空优先使用
-  `org.apache.commons.lang3.StringUtils`。
-- List、Set、Map 判空优先使用
-  `org.apache.commons.collections4.CollectionUtils`。
+- 业务逻辑校验失败时使用 `com.yuanchuan.common.exception.BusinessException`。
+- String 处理判断等优先使用 `org.apache.commons.lang3.StringUtils`,`org.apache.commons.lang3.Strings.CS`,`org.apache.commons.lang3.Strings.CI`,`org.apache.commons.lang3.Strings`,不要使用 `Deprecated` 的方法
+- List、Set、Map 判空优先使用 `org.apache.commons.collections4.CollectionUtils`。
 - 修改数据库字段时同步检查 PO、DTO、Mapper、XML、Repository 和相关测试。
 - 新增数据库字段或表时，在模块 `guide/`  目录增加 SQL 文件。
 - 新建表的主键使用 `int` 数据类型，不添加 `created_at`、`created_by` 字段。
@@ -48,7 +45,8 @@ The following rules apply only when the workspace is under `/Users/bianjq/yuanch
 - SQL 文件命名使用 `<table-name>_<YYYYMMDD>.sql`。
 - 实施方案文件放到当前工作区的 `guide/plan/`。
 - 查询或验证真实数据时必须使用全局 `db-tools` Skill。
-- Java 代码中 log.info 中的信息以英文为主
+- Java 代码中 log.info 中的信息以英文为主,信息中带 method 名称
+- Java 代码中的注释,log.info 中的信息,用英文符号,不要使用中文的符号,如不要使用`，`,`。`,`：`，使用`,`,`.`,`:`
 ## Yuanchuan Project Lookup
 The following instructions apply only when the current workspace is under `/Users/bianjq/yuanchuan/`.
 ```text
