@@ -3,50 +3,53 @@
 ## Communication
 
 - 默认使用中文交流。
-- Yuanchuan 项目的业务说明、Swagger `@Schema` 描述使用繁体中文。
-- 日志、代码标识符和代码注释以英文为主。
-- 不使用无必要的特殊字符或表情符号。
+- Yuanchuan 项目的业务说明、Swagger `@Schema` 描述使用繁体中文.
+- 日志、代码标识符和代码注释以英文为主.
+- 不使用无必要的特殊字符或表情符号.
 
 ## Engineering
 
-- 修改前先阅读相关实现、调用链和测试。
-- 遵循现有架构和编码风格，不做无关重构。
-- 先导入依赖，再使用依赖。
-- 避免新增过时或未经验证的依赖。
-- 保留用户已有的未提交修改。
-- 未经要求不要创建分支、提交或推送代码。
-- 修改后执行与改动范围匹配的验证。
+- 修改前先阅读相关实现、调用链和测试.
+- 遵循现有架构和编码风格，不做无关重构.
+- 先导入依赖，再使用依赖.
+- 避免新增过时或未经验证的依赖.
+- 保留用户已有的未提交修改.
+- 未经要求不要创建分支、提交或推送代码.
+- 修改后执行与改动范围匹配的验证.
 
 ## Python
 
-- 以下规则仅适用于 Python 代码。
-- `INFO` 级别日志内容以英文为主，避免不必要的特殊字符。
-- 代码注释以英文为主，避免不必要的特殊字符。
+- 以下规则仅适用于 Python 代码.
+- python `INFO` 级别日志内容以英文为主，避免不必要的特殊字符.
+- python 代码注释以英文为主，避免不必要的特殊字符.
 - python 代码中的信息打印使用 `logging`, 不使用 `print` 输出信息.
-- 应用运行信息使用标准 `logging`, 不使用 `print` 代替日志.
-- CLI 的预期标准输出、数据管道输出和测试捕获输出可以使用 `print`。
-- 配置日志处理器，确保日志信息在当前执行环境的控制台中可见。
+- python 应用运行信息使用标准 `logging`, 不使用 `print` 代替日志.
+- CLI 的预期标准输出、数据管道输出和测试捕获输出可以使用 `print`.
+- 配置日志处理器，确保日志信息在当前执行环境的控制台中可见.
 
 ## Yuanchuan Projects
 
 The following rules apply only when the workspace is under `/Users/bianjq/yuanchuan/`.
 
-- 按照项目现有 DDD 分层架构开发。
-- 不分析 `backup/` 目录下的文件。
-- 新增字段和方法时添加简洁注释。
-- 业务逻辑校验失败时使用 `com.yuanchuan.common.exception.BusinessException`。
-- String 处理判断等优先使用 `org.apache.commons.lang3.StringUtils`,`org.apache.commons.lang3.Strings.CS`,`org.apache.commons.lang3.Strings.CI`,`org.apache.commons.lang3.Strings`,不要使用 `Deprecated` 的方法
-- List、Set、Map 判空优先使用 `org.apache.commons.collections4.CollectionUtils`。
-- 修改数据库字段时同步检查 PO、DTO、Mapper、XML、Repository 和相关测试。
-- 新增数据库字段或表时，在模块 `guide/`  目录增加 SQL 文件。
-- 新建表的主键使用 `int` 数据类型，不添加 `created_at`、`created_by` 字段。
+- 按照项目现有 DDD 分层架构开发.
+- 不分析 `backup/` 目录下的文件.
+- 新增字段和方法时添加简洁注释.
+- 业务逻辑校验失败时使用 `com.yuanchuan.common.exception.BusinessException`.
+- String 处理判断等优先使用 `org.apache.commons.lang3.StringUtils`,`org.apache.commons.lang3.Strings.CS`,`org.apache.commons.lang3.Strings.CI`,`org.apache.commons.lang3.Strings`,不要使用 `Deprecated` 的方法.
+- List、Set、Map 判空优先使用 `org.apache.commons.collections4.CollectionUtils`.
+- 修改数据库字段时同步检查 PO、DTO、Mapper、XML、Repository 和相关测试.
+- 新增数据库字段或表时，在模块 `guide/`  目录增加 SQL 文件.
+- 新建表的主键使用 `int` 数据类型，不添加 `created_at`、`created_by` 字段.
 - 新建表的字段不使用数据库的保留字,关键字。如 order,status 等,使用时加业务含义前缀如 task_status,business_order.
-- MyBatis-Plus 以 XML Mapper 为主要实现方式，尽量少用 Lambda 表达式。
-- SQL 文件命名使用 `<table-name>_<YYYYMMDD>.sql`。
-- 实施方案文件放到当前工作区的 `guide/plan/`。
-- 查询或验证真实数据时必须使用全局 `db-tools` Skill。
-- Java 代码中 log.info 中的信息以英文为主,信息中带 method 名称
+- MyBatis-Plus 以 XML Mapper 为主要实现方式，尽量少用 Lambda 表达式.
+- SQL 文件命名使用 `<table-name>_<YYYYMMDD>.sql`.
+- 实施方案文件放到当前工作区的 `guide/plan/`.
+- 查询或验证真实数据时必须使用全局 `db-tools` Skill.
+- Java 代码中 log.info 中的信息以英文为主,信息中带当前 method 名称.
 - Java 代码中的注释,log.info 中的信息,用英文符号,不要使用中文的符号,如不要使用`，`,`。`,`：`，使用`,`,`.`,`:`
+- 项目代码中涉及到 Job,Scheduler,Task 等后台定时任务时, 使用 `com.yuanchuan.common.utils.RedisUtil` 设置共享锁, expireTime = 2 Second,防止集群机器同时运行后台定时任务.
+- 代码中涉及createdBy,updatedBy,在 gateway-app 层调用 `com.yuanchuan.authentication.content.utils.AuthUserContextUtils.getCurrentUserId` 方法读取userId,设置对应的值. 
+
 ## Yuanchuan Project Lookup
 The following instructions apply only when the current workspace is under `/Users/bianjq/yuanchuan/`.
 ```text
@@ -78,9 +81,9 @@ ProjectHome=/Users/bianjq/yuanchuan
 
 For workspaces under `/Users/bianjq/yuanchuan/`:
 
-- 未指定环境时使用 `local`。
-- `local`、`devdb`、`db191` 均表示 local 环境。
-- `dev001`、`dev236`、`db236`、`236` 均表示 dev001 环境。
-- 不要把 `devdb` 误认为 `dev001`。
-- 涉及真实记录、Mapper、Repository、数据库状态或 Schema 验证时，
-  调用 `$db-tools`，不要根据代码猜测数据。
+- 未指定环境时使用 `local`.
+- `local`、`devdb`、`db191` 均表示 local 环境.
+- `dev001`、`dev236`、`db236`、`236` 均表示 dev001 环境.
+- 不要把 `devdb` 误认为 `dev001`.
+- 涉及真实记录、Mapper、Repository、数据库状态或 Schema 验证时.
+- 调用 `$db-tools`，不要根据代码猜测数据.
