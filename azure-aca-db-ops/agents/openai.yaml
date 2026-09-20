@@ -1,0 +1,3 @@
+interface:
+  display_name: "Azure ACA DB Operations"
+  short_description: "Run authorized UAT-first DB operations through Azure ACA on 237,via 237"
