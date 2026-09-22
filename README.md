@@ -60,3 +60,6 @@ Install or copy a skill directory into the agent's skills location, then invoke 
 ## License
 
 See the license files in this repository and in individual skill directories.
+
+## remark 
+- backend-development skills copy from https://github.com/wshobson/agents 
