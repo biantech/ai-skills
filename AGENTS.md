@@ -35,13 +35,13 @@ The following rules apply only when the workspace is under `/Users/bianjq/yuanch
 - 不分析 `backup/` 目录下的文件.
 - 新增字段和方法时添加简洁注释.
 - 业务逻辑校验失败时使用 `com.yuanchuan.common.exception.BusinessException`.
-- String 处理判断等优先使用 `org.apache.commons.lang3.StringUtils`,`org.apache.commons.lang3.Strings.CS`,`org.apache.commons.lang3.Strings.CI`,`org.apache.commons.lang3.Strings`,不要使用 `Deprecated` 的方法.
+- String 处理判断等优先使用 `org.apache.commons.lang3.StringUtils`,`org.apache.commons.lang3.Strings.CS`,`org.apache.commons.lang3.Strings.CI`,`org.apache.commons.lang3.Strings`,不要使用其中的 `Deprecated` 的方法.
 - List、Set、Map 判空优先使用 `org.apache.commons.collections4.CollectionUtils`.
 - 修改数据库字段时同步检查 PO、DTO、Mapper、XML、Repository 和相关测试.
 - 新增数据库字段或表时，在模块 `guide/`  目录增加 SQL 文件.
 - 新建表的主键使用 `int` 数据类型，不添加 `created_at`、`created_by` 字段.
 - 新建表的字段不使用数据库的保留字,关键字。如 order,status 等,使用时加业务含义前缀如 task_status,business_order.
-- MyBatis-Plus 以 XML Mapper 为主要实现方式，尽量少用 Lambda 表达式.
+- MyBatis-Plus 以 XML Mapper 为主要实现方式，尽量少用 Lambda 表达式, 新增的Mapper 需要 extends `com.baomidou.mybatisplus.core.mapper.BaseMapper`,RepositoryImpl 需要 extends `com.baomidou.mybatisplus.extension.service.impl.ServiceImpl`.
 - SQL 文件命名使用 `<table-name>_<YYYYMMDD>.sql`.
 - 实施方案文件放到当前工作区的 `guide/plan/`.
 - 查询或验证真实数据时必须使用全局 `db-tools` Skill.
