@@ -1,14 +1,35 @@
-model_provider = "zcloud"
-model = "gpt-5.6-sol"
-model_reasoning_effort = "medium"
+## default_config_zcloud
+ model_provider = "zcloud"
+ model = "gpt-6-sol"
+ model_reasoning_effort = "medium"
 
+
+## nvidia_config
 #model_provider = "nvidia"
 #model = "nvidia/nemotron-3-super-120b-a12b"
+# model_catalog_json = "~/.codex/model-catalog.json"
+
+## deepseek_config
+# model = "deepseek-flash"
+# model_provider = "deepseek"
+# preferred_auth_method = "apikey"
+# forced_login_method = "api"
+# model_reasoning_effort = "high"
+# web_search = "disabled"
+# model_catalog_json = "~/.codex/model-catalog.json"
+
 
 notify = ["/Users/bianjq/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 
 [model_providers]
 
+[model_providers.deepseek]
+name = "deepseek"
+base_url = "https://api.deepseek.com/"
+wire_api = "responses"
+#experimental_bearer_token = "sk-d1264dd42a1d4a468c2ab93ac43fc255"
+env_key = "DEEPSEEK_API_KEY"
+# .codex/env.sh 中设置key
 [model_providers.nvidia]
 name = "NVIDIA Build"
 base_url = "https://integrate.api.nvidia.com/v1"
@@ -35,6 +56,10 @@ source = "/Users/bianjq/.codex/.tmp/bundled-marketplaces/openai-bundled"
 [marketplaces.openai-primary-runtime]
 source_type = "local"
 source = "/Users/bianjq/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[marketplaces.claude-code-workflows]
+source_type = "git"
+source = "git@github.com:wshobson/agents.git"
 
 [plugins."visualize@openai-bundled"]
 enabled = true
@@ -117,6 +142,24 @@ trust_level = "trusted"
 [projects."/Users/bianjq/yuanchuan/merchant"]
 trust_level = "trusted"
 
+[projects."/Users/bianjq/yuanchuan/powerjob"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/content"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/yuanchuan/recommend"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/Downloads/agents-main"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/software/wshobson-agents-skills"]
+trust_level = "trusted"
+
+[projects."/Users/bianjq/work"]
+trust_level = "trusted"
+
 [features]
 js_repl = false
 
@@ -137,8 +180,8 @@ NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = ""
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.901.22334"
-NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/bianjq/.codex/plugins/cache/openai-bundled/browser/26.901.22334/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+BROWSER_USE_CODEX_APP_VERSION = "26.917.62051"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/bianjq/.codex/plugins/cache/openai-bundled/browser/26.917.62051/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
 SKY_CUA_SERVICE_PATH = "/Users/bianjq/.codex/computer-use/Codex Computer Use.app"
 CODEX_CLI_PATH = "/Users/bianjq/Applications/ChatGPT.app/Contents/Resources/codex"
 
@@ -152,4 +195,4 @@ enabled = false
 NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "9230e2bd8b24b7ac7a0ba6774c64bf0d78ecdabbdd91d0ed627b02a587bae2df"
 
 [tui.model_availability_nux]
-"gpt-5.6-sol" = 4
+"gpt-6-sol" = 4
